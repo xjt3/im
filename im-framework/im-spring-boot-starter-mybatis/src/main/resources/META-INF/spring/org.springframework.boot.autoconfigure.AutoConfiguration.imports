@@ -1,0 +1,3 @@
+com.github.xjt3.framework.datasource.config.ImDataSourceAutoConfiguration
+com.github.xjt3.framework.mybatis.config.ImMybatisAutoConfiguration
+com.github.xjt3.framework.translate.config.ImTranslateAutoConfiguration

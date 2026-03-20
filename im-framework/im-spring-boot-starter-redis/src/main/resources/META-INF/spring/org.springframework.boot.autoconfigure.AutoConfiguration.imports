@@ -1,0 +1,2 @@
+com.github.xjt3.framework.redis.config.ImRedisAutoConfiguration
+com.github.xjt3.framework.redis.config.ImCacheAutoConfiguration

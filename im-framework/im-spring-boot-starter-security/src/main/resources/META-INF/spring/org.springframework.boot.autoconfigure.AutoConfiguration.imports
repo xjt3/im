@@ -1,0 +1,3 @@
+com.github.xjt3.framework.security.config.ImSecurityAutoConfiguration
+com.github.xjt3.framework.security.config.ImWebSecurityConfigurerAdapter
+com.github.xjt3.framework.operatelog.config.ImOperateLogConfiguration

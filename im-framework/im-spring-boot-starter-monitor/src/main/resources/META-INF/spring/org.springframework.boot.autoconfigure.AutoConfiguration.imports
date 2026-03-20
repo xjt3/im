@@ -1,0 +1,2 @@
+com.github.xjt3.framework.tracer.config.ImTracerAutoConfiguration
+com.github.xjt3.framework.tracer.config.ImMetricsAutoConfiguration

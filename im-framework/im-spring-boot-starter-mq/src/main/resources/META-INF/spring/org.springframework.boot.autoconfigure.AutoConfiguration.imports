@@ -1,0 +1,3 @@
+com.github.xjt3.framework.mq.redis.config.ImRedisMQProducerAutoConfiguration
+com.github.xjt3.framework.mq.redis.config.ImRedisMQConsumerAutoConfiguration
+com.github.xjt3.framework.mq.rabbitmq.config.ImRabbitMQAutoConfiguration

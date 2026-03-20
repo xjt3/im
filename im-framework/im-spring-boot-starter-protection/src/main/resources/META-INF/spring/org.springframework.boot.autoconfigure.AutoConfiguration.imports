@@ -1,0 +1,4 @@
+com.github.xjt3.framework.idempotent.config.ImIdempotentConfiguration
+com.github.xjt3.framework.lock4j.config.ImLock4jConfiguration
+com.github.xjt3.framework.ratelimiter.config.ImRateLimiterConfiguration
+com.github.xjt3.framework.signature.config.ImApiSignatureAutoConfiguration

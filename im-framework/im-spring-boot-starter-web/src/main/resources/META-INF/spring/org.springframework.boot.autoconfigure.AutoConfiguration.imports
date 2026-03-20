@@ -1,0 +1,7 @@
+com.github.xjt3.framework.apilog.config.ImApiLogAutoConfiguration
+com.github.xjt3.framework.jackson.config.ImJacksonAutoConfiguration
+com.github.xjt3.framework.swagger.config.ImSwaggerAutoConfiguration
+com.github.xjt3.framework.web.config.ImWebAutoConfiguration
+com.github.xjt3.framework.xss.config.ImXssAutoConfiguration
+com.github.xjt3.framework.banner.config.ImBannerAutoConfiguration
+com.github.xjt3.framework.encrypt.config.ImApiEncryptAutoConfiguration
