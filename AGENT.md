@@ -69,12 +69,51 @@ com.github.xjt3.module.system
 └── framework           # 模块专属配置
 ```
 
-### 3.4 IM 核心模块（规划中）
-建议在 `im-framework` 下新增以下子模块：
-| 子模块 | 职责 |
-|--------|------|
-| `im-netty` | Netty 服务端启动类、Channel 管理（Session）、核心 Handler 配置 |
-| `im-protocol` | 网络通信协议定义、编解码器（Codec）、消息体对象（Packet/Message） |
+### 3.4 IM 核心模块（im-server 内实现）
+
+**模块职责**：  
+为快速启动项目并保持架构简洁，IM 核心功能（高并发 Netty TCP 服务端、统一协议栈、会话管理、消息路由、QoS 可靠投递、离线消息存储、读/写扩散策略）全部集成在启动模块 `im-server` 中。  
+支持多机部署（Redis 同步 Session）、多租户隔离、雪花算法全局 Sequence ID （Hutool）。未来业务量增大时，可无缝拆分为独立 `im-module-im` 模块。
+
+**新增目录结构**（严格置于 `im-server/src/main/java/com/github/xjt3` 下，与原有模块风格保持一致）：
+
+| 目录       | 职责 |
+|------------|------|
+| `netty`    | Netty 服务端启动类、Channel 管理（Session）、核心 Handler 配置、业务线程池隔离 |
+| `protocol` | 网络通信协议定义、编解码器（Codec）、消息体对象（Packet/Message）、Protobuf 定义 |
+
+**详细子包结构**（推荐完整扩展，便于后续维护）：
+
+```bash
+com.github.xjt3
+├── netty
+│   ├── NettyServer               # 主启动类（BossGroup / WorkerGroup / BusinessThreadPool）
+│   ├── initializer               # ChannelInitializer（添加编解码器 + Handler 链）
+│   ├── handler                   # ChannelHandler 链（必须非阻塞）
+│   │   ├── LoginHandler
+│   │   ├── MessageHandler
+│   │   ├── AckHandler
+│   │   ├── HeartbeatHandler
+│   │   └── ExceptionHandler
+│   ├── session                   # Session 管理（Channel ↔ UserId 映射，Redis 同步）
+│   ├── attribute                 # Channel 属性工具（userId、tenantId、deviceType）
+│   └── thread                    # 业务线程池配置（Spring 托管，严禁阻塞 WorkerGroup）
+├── protocol
+│   ├── Packet                    # 统一协议包（Header + Body）
+│   ├── header                    # Header POJO（Magic + Version + Serializer + Command + Length）
+│   ├── codec                     # 编解码器（IMLengthFieldDecoder + ProtobufEncoder/Decoder）
+│   ├── command                   # CommandEnum（LOGIN、SEND_MSG、ACK、HEARTBEAT 等）
+│   ├── message                   # 统一 Message 基类及子类（ChatMessage、GroupMessage 等）
+│   └── protobuf                  # .proto 文件及生成类（resources/proto 目录）
+├── service                       # IM 业务服务层（MessageService、SessionService、PushService）
+├── dal                           # 数据访问层（复用 MyBatis-Plus + Redis DAO）
+│   ├── dataobject
+│   ├── mysql
+│   └── redis
+├── enums                         # MessageTypeEnum、QoSEnum
+├── mq                            # 异步消息队列生产/消费
+└── config                        # IMProperties、NettyConfig
+```
 
 ## 4. 编码规范
 
